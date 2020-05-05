@@ -138,6 +138,7 @@ ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 		sdm670-pm660a-tasha-codec-cdp-overlay.dtbo \
 		sdm710-mtp-overlay.dtbo \
 		sdm710-qrd-overlay.dtbo \
+		sdm710-qrd-sku2-overlay.dtbo \
 		sdm710-pm660a-cdp-overlay.dtbo \
 		sdm710-pm660a-mtp-overlay.dtbo \
 		sdm710-external-codec-cdp-overlay.dtbo \
