@@ -114,11 +114,14 @@ endif
 
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 	dtbo-$(CONFIG_ARCH_SDM670) += \
+		sdm670-cdp-overlay.dtbo \
 		sdm670-mtp-overlay.dtbo \
 		sdm670-rumi-overlay.dtbo \
 		sdm670-qrd-overlay.dtbo \
+		sdm670-qrd-sku2-overlay.dtbo \
 		sdm670-pm660a-cdp-overlay.dtbo \
 		sdm670-pm660a-mtp-overlay.dtbo \
+		sdm670-external-codec-cdp-overlay.dtbo \
 		sdm670-external-codec-mtp-overlay.dtbo \
 		sdm670-external-codec-pm660a-cdp-overlay.dtbo \
 		sdm670-external-codec-pm660a-mtp-overlay.dtbo \
@@ -135,6 +138,7 @@ ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 		sda670-hdk-overlay.dtbo \
 		sda670-pm660a-cdp-overlay.dtbo \
 		sda670-pm660a-mtp-overlay.dtbo \
+		sdm670-tasha-codec-cdp-overlay.dtbo \
 		sdm670-pm660a-tasha-codec-cdp-overlay.dtbo \
 		sdm710-mtp-overlay.dtbo \
 		sdm710-qrd-overlay.dtbo \
