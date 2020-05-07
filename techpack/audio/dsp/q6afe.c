@@ -27,6 +27,10 @@
 #include "adsp_err.h"
 #include <dsp/q6core.h>
 
+#if defined(CONFIG_CIRRUS_SPKR_PROTECTION)
+#include "msm-cirrus-playback.h"
+#endif
+
 #ifdef CONFIG_SND_SOC_TFA9874
 #define AFE_MODULE_ID_TFADSP_RX		(0x1000B911)
 #define AFE_MODULE_ID_TFADSP_TX		(0x1000B912)
@@ -383,6 +387,13 @@ static int32_t afe_callback(struct apr_client_data *data, void *priv)
 			av_dev_drift_afe_cb_handler(data->payload,
 						    data->payload_size);
 		} else {
+
+#if defined(CONFIG_CIRRUS_SPKR_PROTECTION)
+			if (!crus_afe_callback(data->payload,
+					       data->payload_size))
+				return 0;
+#endif
+
 			if (rtac_make_afe_callback(data->payload,
 						   data->payload_size))
 				return 0;
@@ -843,6 +854,26 @@ static int afe_apr_send_pkt(void *data, wait_queue_head_t *wait)
 	pr_debug("%s: leave %d\n", __func__, ret);
 	return ret;
 }
+
+#if defined(CONFIG_CIRRUS_SPKR_PROTECTION)
+extern int afe_apr_send_pkt_crus(void *data, int index, int set)
+{
+	int ret = 0;
+
+	ret = afe_q6_interface_prepare();
+	if (ret != 0) {
+		pr_err("%s: Q6 interface prepare failed ret: %d\n",
+				__func__, ret);
+		return -EINVAL;
+	}
+
+	if (set)
+		return afe_apr_send_pkt(data, &this_afe.wait[index]);
+	else /* get */
+		return afe_apr_send_pkt(data, 0);
+}
+EXPORT_SYMBOL(afe_apr_send_pkt_crus);
+#endif
 
 static int afe_send_cal_block(u16 port_id, struct cal_block_data *cal_block)
 {
@@ -3997,6 +4028,10 @@ int afe_get_port_index(u16 port_id)
 		return -EINVAL;
 	}
 }
+
+#if defined(CONFIG_CIRRUS_SPKR_PROTECTION)
+EXPORT_SYMBOL(afe_get_port_index);
+#endif
 
 /**
  * afe_open -

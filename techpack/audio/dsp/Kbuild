@@ -91,24 +91,29 @@ ifdef CONFIG_SND_SOC_MSM_QDSP6V2_INTF
 	Q6_OBJS += avtimer.o
 	Q6_OBJS += q6_init.o
 endif
+
 ifdef CONFIG_DTS_SRS_TM
 	Q6_OBJS += msm-dts-srs-tm-config.o
 endif
 
 ifdef CONFIG_MSM_ADSP_LOADER
-ADSP_LOADER_OBJS += adsp-loader.o
+	ADSP_LOADER_OBJS += adsp-loader.o
 endif
 
 ifdef CONFIG_MSM_QDSP6_NOTIFIER
-QDSP6_NOTIFIER_OBJS += audio_notifier.o audio_ssr.o
+	QDSP6_NOTIFIER_OBJS += audio_notifier.o audio_ssr.o
 endif
 
 ifdef CONFIG_MSM_QDSP6_PDR
-QDSP6_PDR_OBJS += audio_pdr.o
+	QDSP6_PDR_OBJS += audio_pdr.o
 endif
 
 ifdef CONFIG_MSM_ULTRASOUND
-USF_OBJS += usf.o usfcdev.o q6usm.o
+	USF_OBJS += usf.o usfcdev.o q6usm.o
+endif
+
+ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+	Q6_OBJS += msm-cirrus-playback.o
 endif
 
 LINUX_INC +=	-Iinclude/linux

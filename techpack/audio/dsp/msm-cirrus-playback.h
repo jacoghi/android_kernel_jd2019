@@ -131,8 +131,8 @@ struct crus_rx_temperature_t {
 #define CRUS_MAX_BUFFER_SIZE	384
 void msm_crus_pb_add_controls(struct snd_soc_platform *platform);
 
-void crus_set_callback(crus_callback);
-int afe_apr_send_pkt_crus(void *data, int index, int set);
+extern int crus_afe_callback(void *payload, int size);
+extern int afe_apr_send_pkt_crus(void *data, int index, int set);
 extern int jzw_workaround_load_effect(void);
 #endif /* _MSM_CIRRUS_PLAYBACK_H */
 

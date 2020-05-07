@@ -129,8 +129,8 @@ struct crus_rx_temperature_t {
 #define MIN_CHAN_SWAP_SAMPLES	48
 #define MAX_CHAN_SWAP_SAMPLES	9600
 #define CRUS_MAX_BUFFER_SIZE	384
+
 void msm_crus_pb_add_controls(struct snd_soc_platform *platform);
-void crus_set_callback(crus_callback);
-int afe_apr_send_pkt_crus(void *data, int index, int set);
+extern int afe_apr_send_pkt_crus(void *data, int index, int set);
 #endif /* _MSM_CIRRUS_PLAYBACK_H */
 

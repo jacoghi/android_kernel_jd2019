@@ -161,7 +161,13 @@ static int crus_afe_get_param(int port, int module, int param, int length,
 	crus_sp_get_buffer = kzalloc(config->param.payload_size + 16,
 				     GFP_KERNEL);
 
-	crus_set_callback(crus_afe_callback);
+	if (!crus_sp_get_buffer) {
+		pr_err("%s: kzalloc failed for crus_sp_get_buffer!\n",
+		       __func__);
+		ret = -ENOMEM;
+		goto crus_sp_get_buffer_err;
+	}
+
 	ret = afe_apr_send_pkt_crus(config, index, 0);
 	if (ret)
 		pr_err("CRUS_SP: (get_param) failed with code %d\n", ret);
@@ -173,16 +179,20 @@ static int crus_afe_get_param(int port, int module, int param, int length,
 			pr_err("CRUS_SP: AFE callback timeout\n");
 			atomic_set(&crus_sp_get_param_flag, 1);
 			ret = -EINVAL;
-			goto exit;
+			goto crus_sp_get_param_err;
 		}
 	}
 
 	/* Copy from dynamic buffer to return buffer */
 	memcpy((u8 *)data, &crus_sp_get_buffer[4], length);
 
-exit:
+crus_sp_get_param_err:
 	kfree(crus_sp_get_buffer);
+	crus_sp_get_buffer = NULL;
+
+crus_sp_get_buffer_err:
 	mutex_unlock(&crus_sp_get_param_lock);
+
 	kfree(config);
 	return ret;
 }
@@ -347,7 +357,7 @@ static int crus_afe_send_delta(const char *data, uint32_t length)
 	return ret;
 }
 
-int crus_afe_callback(void *payload, int size)
+extern int crus_afe_callback(void *payload, int size)
 {
 	uint32_t *payload32 = payload;
 
@@ -362,6 +372,7 @@ int crus_afe_callback(void *payload, int size)
 
 	return 0;
 }
+EXPORT_SYMBOL(crus_afe_callback);
 
 int msm_routing_cirrus_fbport_put(struct snd_kcontrol *kcontrol,
 					struct snd_ctl_elem_value *ucontrol)
