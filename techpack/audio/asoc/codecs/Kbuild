@@ -148,6 +148,14 @@ ifdef CONFIG_SND_SOC_MSM_HDMI_CODEC_RX
 	HDMICODEC_OBJS += msm_hdmi_codec_rx.o
 endif
 
+# for CS35L41 Codec
+ifdef CONFIG_SND_SOC_CS35L41
+	CS35L41_OBJS += cs35l41.o
+	CS35L41_OBJS += cs35l41-i2c.o
+	CS35L41_OBJS += cs35l41-tables.o
+	CS35L41_OBJS += wm_adsp.o
+endif
+
 LINUX_INC +=	-Iinclude/linux
 
 INCS +=		$(COMMON_INC) \
@@ -195,6 +203,7 @@ ifeq ($(KERNEL_BUILD), 1)
 	obj-y	+= msm_sdw/
 	obj-y	+= tfa98xx/
 endif
+
 # Module information used by KBuild framework
 obj-$(CONFIG_WCD9XXX_CODEC_CORE) += wcd_core_dlkm.o
 wcd_core_dlkm-y := $(CORE_OBJS)
@@ -225,6 +234,9 @@ mbhc_dlkm-y := $(MBHC_OBJS)
 
 obj-$(CONFIG_SND_SOC_MSM_HDMI_CODEC_RX) += hdmi_dlkm.o
 hdmi_dlkm-y := $(HDMICODEC_OBJS)
+
+obj-$(CONFIG_SND_SOC_CS35L41) += cs35l41_dlkm.o
+cs35l41_dlkm-y := $(CS35L41_OBJS)
 
 # inject some build related information
 DEFINES += -DBUILD_TIMESTAMP=\"$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')\"
