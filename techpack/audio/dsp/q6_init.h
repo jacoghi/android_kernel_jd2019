@@ -26,7 +26,13 @@ int rtac_init(void);
 int msm_audio_ion_init(void);
 int audio_slimslave_init(void);
 int avtimer_init(void);
+#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+int crus_sp_init(void);
+#endif
 
+#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+void crus_sp_exit(void);
+#endif
 void avtimer_exit(void);
 void audio_slimslave_exit(void);
 void msm_audio_ion_exit(void);
