@@ -33,7 +33,13 @@ int msm_pcm_voice_init(void);
 int msm_pcm_voip_init(void);
 int msm_transcode_loopback_init(void);
 int msm_cpe_lsm_init(void);
+#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+int crus_sp_init(void);
+#endif
 
+#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+void crus_sp_exit(void);
+#endif
 void msm_cpe_lsm_exit(void);
 void msm_transcode_loopback_exit(void);
 void msm_pcm_voip_exit(void);

@@ -36,12 +36,18 @@ static int __init audio_platform_init(void)
 	msm_pcm_voice_init();
 	msm_pcm_voip_init();
 	msm_transcode_loopback_init();
+	#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+		crus_sp_init();
+	#endif
 
 	return 0;
 }
 
 static void audio_platform_exit(void)
 {
+	#ifdef CONFIG_CIRRUS_SPKR_PROTECTION
+		crus_sp_exit();
+	#endif
 	msm_transcode_loopback_exit();
 	msm_pcm_voip_exit();
 	msm_pcm_voice_exit();
