@@ -1,2 +1,3 @@
-obj-y += stub/ audio/
+#obj-y += stub/ audio/
+obj-y += stub/
 header-y += stub/include/uapi/ audio/include/uapi/
